@@ -57,14 +57,17 @@ function employeeList() {
     $("#table").empty();
     $("#employeeList").html("<option selected='selected'>Choose Employee </option>");
 
+    database.ref().on("value", function () {
+        console.log("data" + snapshot.val());
 
+    });
     //on database update
     database.ref().on("child_added", function (childSnapshot) {
-        console.log("database ", childSnapshot);
+        //console.log("database ", childSnapshot);
 
         $("#employeeList").append("<option value=" + childSnapshot.val().EmployeeName + ">" + childSnapshot.val().EmployeeName + "</option>");
         $("#employees").append("<option value=" + childSnapshot.val().EmployeeName + ">" + childSnapshot.val().EmployeeName + "</option>");
-        $("#table").append("<tr><td>" + selectedEmployee + "</td><td>" + punchIN + "</td><td>"+ punchOUT +"</td></tr>")
+        $("#table").append("<tr><td>" + childSnapshot.val().EmployeeName + "</td><td>" + childSnapshot.val().punchIN + "</td><td>" + childSnapshot.val().punchOUT + "</td></tr>")
     });
 }
 
@@ -83,6 +86,7 @@ function punchIn() {
 
         // Change what is saved in firebase
         database.ref().push({
+            selectedEmployee: selectedEmployee,
             punchIN: datestampIn,
             date: date,
         });
@@ -100,6 +104,7 @@ function punchOut() {
 
         // Change what is saved in firebase
         database.ref().push({
+            selectedEmployee: selectedEmployee,
             punchOUT: datestampOUT,
             date: date,
         });
@@ -123,7 +128,7 @@ function addEmployee() {
         newEmployeeName = $("#nameInput").val().trim();
 
         // Change what is saved in firebase
-        database.ref().push({
+        database.ref().child().push({
             EmployeeName: newEmployeeName,
         });
         alert(newEmployeeName + " added!");
