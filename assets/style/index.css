@@ -1,0 +1,81 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.navbar {
+    background-color: rgb(60, 175, 100);
+    width: 100%;
+    z-index: 99;
+    border-bottom: 4px solid #666;
+}
+
+.navbar img {
+    width: 3rem;
+}
+
+.brand {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1.5rem;
+}
+
+.content {
+    text-align: center;
+}
+
+.main {
+    box-sizing: content-box;
+    width: 18rem;
+    height: 15rem;
+    padding: 1rem;
+    border: 1px solid black;
+    margin: auto;
+    background-color: rgb(60, 175, 100);
+    box-shadow: 1px 1px 10px black;
+}
+
+.main input{
+    float: right;
+}
+
+
+/* sticky footer code */
+* {
+    box-sizing: border-box;
+}
+
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    position: relative;
+}
+
+.main-container {
+    min-height: 100vh;
+    /* will cover the 100% of viewport */
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom: 100px;
+    /* height of your footer */
+
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: rgb(60, 175, 100);
+    border-top: 4px solid #666;
+}
+
+.footer a:link {
+    color: black;
+    text-decoration: underline;
+}
