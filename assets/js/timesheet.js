@@ -60,9 +60,11 @@ function employeeList() {
 
     //on database update
     database.ref().on("child_added", function (childSnapshot) {
+        console.log("database ", childSnapshot);
 
         $("#employeeList").append("<option value=" + childSnapshot.val().EmployeeName + ">" + childSnapshot.val().EmployeeName + "</option>");
         $("#employees").append("<option value=" + childSnapshot.val().EmployeeName + ">" + childSnapshot.val().EmployeeName + "</option>");
+        $("#table").append("<tr><td>" + selectedEmployee + "</td><td>" + punchIN + "</td><td>"+ punchOUT +"</td></tr>")
     });
 }
 
@@ -78,6 +80,12 @@ function punchIn() {
         datestampIn = datestamp;
         alert(selectedEmployee + " Clocked in at " + datestampIn)
         $("#table").append("<tr><td>" + selectedEmployee + "</td><td>" + datestampIn + "</td><td> </td></tr>")
+
+        // Change what is saved in firebase
+        database.ref().push({
+            punchIN: datestampIn,
+            date: date,
+        });
     }
 }
 
@@ -89,6 +97,12 @@ function punchOut() {
         datestampOut = datestamp;
         alert(selectedEmployee + " Clocked out at " + datestampOut)
         $("#table").append("<tr><td>" + selectedEmployee + "</td><td>  </td><td>" + datestampOut + "</td></tr>")
+
+        // Change what is saved in firebase
+        database.ref().push({
+            punchOUT: datestampOUT,
+            date: date,
+        });
     }
 }
 
@@ -113,7 +127,6 @@ function addEmployee() {
             EmployeeName: newEmployeeName,
         });
         alert(newEmployeeName + " added!");
-        $("#employeeList").append("<option value=" + newEmployeeName + ">" + newEmployeeName + "</option>");
     }
 };
 
@@ -127,8 +140,9 @@ function removeEmployee() {
     console.log("employee to remove", employeeToRemove);
 
     // Change what is saved in firebase
-    database.ref().child(employeeToRemove).remove({
-
+    database.ref().remove({
+        EmployeeName: employeeToRemove,
     });
     alert(employeeToRemove + " Removed!");
+
 };

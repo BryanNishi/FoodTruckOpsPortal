@@ -32,6 +32,11 @@ html {
     box-shadow: 1px 1px 7px black;
 }
 
+ul img{
+    width: 1.5rem !important;
+    vertical-align: top;
+}
+
 /* sticky footer code */
 * {
     box-sizing: border-box;
