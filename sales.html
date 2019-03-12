@@ -35,6 +35,15 @@
                     <a class="nav-link" href="./inventory.html">Inventory</a>
                 </li>
             </ul>
+            <ul class="navbar-nav ml-auto">
+                <li> <button id="add" class="btn btn-info" data-toggle="modal" data-target="#addItemModal"><img src="./assets/images/plus.png" />
+                        Add Menu Item</button>
+                </li>
+                <li>
+                    <button id="remove" class="btn btn-info" data-toggle="modal" data-target="#removeItemModal"><img
+                            src="./assets/images/minus.png" /> Remove Menu Item</button>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -42,6 +51,52 @@
         <h1>Sales</h1>
         <div class="container" id="example-table"></div>
 
+        <!-- Add Item Modal -->
+        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" id="add-modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add New Menu Item</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Name: </p><input type="input" id="itemInput">
+                        <p>Price: </p><input type="input" id="priceInput">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Go Back</button>
+                        <button type="button" class="btn btn-outline-success" onclick="addItem()">Add To Menu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Remove Item Modal -->
+        <div class="modal fade" id="removeItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" id="remove-modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Remove Menu Item</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <select id="items" onchange="itemRemoveHandler()">
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Go Back</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="removeItem()">Remove
+                            From Menu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class=footer>
         Site built by Bryan Nishi © 2019
