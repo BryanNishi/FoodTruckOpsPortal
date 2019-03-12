@@ -23,6 +23,11 @@ html {
     text-align: center;
 }
 
+#example-table{
+    height: 30rem;
+    background-color: #ccc;
+}
+
 /* sticky footer code */
 * {
     box-sizing: border-box;
