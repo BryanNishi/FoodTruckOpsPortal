@@ -25,7 +25,7 @@ html {
 
 .content {
     text-align: center;
- 
+
 }
 
 .btn {
@@ -33,12 +33,31 @@ html {
     box-shadow: 1px 1px 7px black;
 }
 
+.dateSpan {
+    display: flex;
+    justify-content: center;
+    vertical-align: bottom;
+}
+
+#minus {
+    background-image: url("../images/minus.png");
+    background-size: cover;
+    height: 1.6rem;
+}
+
+#plus {
+    background-image: url("../images/plus.png");
+    background-size: cover;
+    height: 1.6rem;
+}
+
+
 ul img {
     width: 1.5rem !important;
     vertical-align: top;
 }
 
-#table{
+#table {
     overflow: hidden;
 }
 

@@ -23,9 +23,22 @@ html {
     text-align: center;
 }
 
-#example-table{
-    height: 30rem;
+.tableTitles {
     background-color: #ccc;
+    display: flex;
+}
+
+.tableTitles h2 {
+    margin: auto;
+}
+
+#table {
+    display: inline;
+}
+
+#table h2 {
+    display: inline-flex;
+    margin: 0 6rem;
 }
 
 .btn {
