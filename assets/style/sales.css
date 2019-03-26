@@ -23,23 +23,25 @@ html {
     text-align: center;
 }
 
-.tableTitles {
-    background-color: #ccc;
-    display: flex;
+
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.tableTitles h2 {
-    margin: auto;
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
 }
 
-#table {
-    display: inline;
+tr:nth-child(even) {
+    background-color: #dddddd;
 }
 
-#table h2 {
-    display: inline-flex;
-    margin: 0 6rem;
-}
 
 .btn {
     margin: 0.1rem;

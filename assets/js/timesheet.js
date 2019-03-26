@@ -33,13 +33,14 @@ var timestampOut = "00:00";
 var selectedDate;
 var yesterday = 0;
 var tomorrow = 0;
+var dateChange = 0;
 
 
 //real time clock
 function startTime() {
     timestamp = moment().format("hh:mm:ss a");
     document.getElementById("time").innerHTML = timestamp;
-    var t = setTimeout(startTime, 500);
+    var t = setTimeout(startTime, 250);
 }
 
 
@@ -89,29 +90,26 @@ function timesheet() {
                 employeeIN = "00:00";
             }
 
-            if (table[name][selectedDate].OUT.valueOf() !== "undefined") {
+            if (table[name][selectedDate].OUT !== "undefined") {
                 employeeOUT = table[name][selectedDate].OUT.punchOUT.valueOf();
             } else {
                 employeeOUT = "00:00";
             }
             $("#table").append("<tr><td>" + name + "</td><td>" + employeeIN + "</td><td>" + employeeOUT + "</td></tr>");
-            
+
         }
     });
 }
 
 function dateBack() {
-    console.log("back");
     yesterday++;
     date = moment().subtract(yesterday, 'days').format("ddd MMM Do");
     document.getElementById("date").innerHTML = date;
-    databaseDate = date;
-    console.log(databaseDate);
+    databaseDate = moment().subtract(yesterday, 'days').format("MMM Do");
     timesheet();
 }
 
 function dateForward() {
-    console.log("forward");
     tomorrow++;
     date = moment().add(tomorrow, 'days').format("ddd MMM Do");
     document.getElementById("date").innerHTML = date;

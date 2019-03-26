@@ -43,12 +43,14 @@ html {
     background-image: url("../images/minus.png");
     background-size: cover;
     height: 1.6rem;
+    border-radius: 8px;
 }
 
 #plus {
     background-image: url("../images/plus.png");
     background-size: cover;
     height: 1.6rem;
+    border-radius: 8px;
 }
 
 

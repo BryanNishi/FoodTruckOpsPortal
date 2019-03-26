@@ -25,6 +25,8 @@ $(document).ready(function () {
     menuItemList();
 });
 
+var sale = 0;
+
 //load menu item list
 function menuItemList() {
     //clear current list for refresh
@@ -45,7 +47,7 @@ function menuItemList() {
 //load menu
 function menuList() {
     //clear current schedule for refresh
-    $("#table").empty();
+    $("#table").html('<tr><th>Name:</th><th>Price:</th><th>Sales:</th><th>Total:</th><th>Add/Sub Sales</th></tr>');
 
     //load existing values
     var menuList = firebase.database().ref('menu/');
@@ -61,13 +63,23 @@ function menuList() {
             sales = table[menuItem].sales.valueOf();
             total = table[menuItem].total.valueOf();
 
-            $("#table").append('<h2>' + name + '</h2><h2>' + price + '</h2><h2>' + sales + '</h2><h2>' + total + '</h2>');
-            $("#table").append("<br>");
+            $("#table").append('<tr><td>' + name + '</td><td>' + price + '</td><td id=sales>' + sales + '</td><td id="total">' + total + '</td><td><button class="btn btn-outline-success" onclick="saleUp()">+</button><button class="btn btn-outline-danger" onclick="saleDown()">-</button></td></tr>');
         }
     });
 };
 
-
+function saleUp() {
+    this.sales++;
+    $("#sales").html(sales);
+    this.total = (this.sales * this.price)
+    $("#total").html(total);
+}
+function saleDown() {
+    this.sales--;
+    $("#sales").html(sales);
+    this.total = (this.sales * this.price)
+    $("#total").html(total);
+}
 
 //Add employee modal function
 function addMenuItem() {
@@ -80,7 +92,7 @@ function addMenuItem() {
         newMenuItem = $("#itemInput").val().trim();
         newItemPrice = $("#priceInput").val().trim();
 
-        $("#table").append('<h2>' + newMenuItem + '</h2><h2>' + newItemPrice + '</h2><h2>' + 0 + '</h2><h2>' + 0.00 + '</h2>');
+        $("#table").append('<h2>' + newMenuItem + '</h2><h2>' + newItemPrice + '</h2><h2>' + 0 + '<button class="btn btn-outline-success">+</button><button class="btn btn-outline-danger">-</button></h2><h2>' + 0.00 + '</h2>');
 
         // Change what is saved in firebase
         database.ref("menu/" + newMenuItem).set({
