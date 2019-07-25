@@ -4,7 +4,9 @@ html {
 }
 
 .navbar {
-    background-color: rgb(60, 175, 100);
+    background-image: url("../images/banner.jpg");
+    background-size: cover;
+    width: 100%;
     width: 100%;
     z-index: 99;
     border-bottom: 4px solid #666;
@@ -21,6 +23,9 @@ html {
 
 .content {
     text-align: center;
+    background-image: url("../images/bg.jpg");
+    background-size: cover;
+    height: 90vh;
 }
 
 .main {
@@ -30,49 +35,36 @@ html {
     padding: 1rem;
     border: 1px solid black;
     margin: auto;
-    background-color: rgb(60, 175, 100);
+    background-image: url("../images/banner.jpg");
+    background-size: cover;
+    background-position: 50%;
     box-shadow: 1px 1px 10px black;
 }
 
-.main input{
+.main input {
     float: right;
 }
 
 
-/* sticky footer code */
-* {
-    box-sizing: border-box;
-}
+/************************************************************** sticky footer code *************************************************/
 
-*:before,
-*:after {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    height: 100%;
-    position: relative;
-}
+/* Don't forget to add (padding-bottom = to footer height) to content container */
 
 .main-container {
-    min-height: 100vh;
-    /* will cover the 100% of viewport */
-    overflow: hidden;
-    display: block;
     position: relative;
-    padding-bottom: 100px;
-    /* height of your footer */
-
+    min-height: 100vh;
 }
 
 .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    text-align: center;
-    background-color: rgb(60, 175, 100);
+    height: 4rem;
+    width: 100%;
+    background-image: url("../images/banner.jpg");
+    background-size: cover;
     border-top: 4px solid #666;
+    text-align: center;
 }
 
 .footer a:link {

@@ -8,6 +8,12 @@ $(document).ready(function () {
 
     timesheet();
 
+
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+
+
 });
 
 
@@ -31,9 +37,7 @@ var datestamp;
 var timestampIn = "00:00";
 var timestampOut = "00:00";
 var selectedDate;
-var yesterday = 0;
-var tomorrow = 0;
-var dateChange = 0;
+var date;
 
 
 //real time clock
@@ -45,10 +49,10 @@ function startTime() {
 
 
 function todaysDate() {
-    date = moment().format("ddd MMM Do");
+    date = moment().format("ddd MMM Do YYYY");
     document.getElementById("date").innerHTML = date;
+    selectedDate = date;
 
-    databaseDate = moment().format("MMM Do");
 }
 
 //load employee list
@@ -72,50 +76,47 @@ function employeeList() {
 function timesheet() {
     var employeeIN;
     var employeeOUT;
-    $("#table").empty();
     var timeTable = firebase.database().ref('employees/');
+
+    //on change to database values...
     timeTable.on('value', function (snapshot) {
+        $("#table").empty();
         var table = snapshot.val();
         var key = Object.keys(snapshot.val());
-        selectedDate = databaseDate;
+        console.log("selectedDate", selectedDate);
 
         var i;
         for (i = 0; i < key.length; i++) {
             name = key[i].valueOf();
-            console.log("this", table[name][selectedDate].IN.punchIN.valueOf())
-            if (table[name][selectedDate].IN !== "undefined") {
-                employeeIN = table[name][selectedDate].IN.punchIN.valueOf();
-                console.log(employeeIN);
+            console.log(name, "punches", table[name][selectedDate])
+            if (table[name][selectedDate] !== undefined) {
+                employeeIN = table[name][selectedDate].punchIN.valueOf();
+                // console.log(employeeIN);
             } else {
                 employeeIN = "00:00";
             }
 
-            if (table[name][selectedDate].OUT !== "undefined") {
-                employeeOUT = table[name][selectedDate].OUT.punchOUT.valueOf();
+            if (table[name][selectedDate] !== undefined) {
+                employeeOUT = table[name][selectedDate].punchOUT.valueOf();
             } else {
                 employeeOUT = "00:00";
             }
             $("#table").append("<tr><td>" + name + "</td><td>" + employeeIN + "</td><td>" + employeeOUT + "</td></tr>");
-
         }
     });
 }
 
-function dateBack() {
-    yesterday++;
-    date = moment().subtract(yesterday, 'days').format("ddd MMM Do");
-    document.getElementById("date").innerHTML = date;
-    databaseDate = moment().subtract(yesterday, 'days').format("MMM Do");
-    timesheet();
-}
 
-function dateForward() {
-    tomorrow++;
-    date = moment().add(tomorrow, 'days').format("ddd MMM Do");
-    document.getElementById("date").innerHTML = date;
-    databaseDate = date;
+
+//date change functions
+function dateHandler() {
+
+    newDate = $("#datepicker").val();
+    document.getElementById("date").innerHTML = newDate;
+    selectedDate = newDate;
     timesheet();
-}
+};
+
 
 /************************************************************Timesheet functions **********************************************/
 
@@ -132,14 +133,12 @@ function punchIn() {
         $("#table").empty();
         timestampIn = timestamp;
         alert(selectedEmployee + " Clocked in at " + timestampIn)
-        // $("#table").append("<tr><td>" + selectedEmployee + "</td><td>" + timestampIn + "</td><td> </td></tr>")
 
         // Change what is saved in firebase
-        database.ref("employees/" + selectedEmployee + "/" + databaseDate + "/IN").set({
+        database.ref("employees/" + selectedEmployee + "/" + date).update({
             punchIN: timestampIn,
-            punchOUT: timestampOut,
+            punchOUT: "00:00",
         });
-
     }
 }
 
@@ -151,12 +150,10 @@ function punchOut() {
     } else {
         $("#table").empty();
         timestampOut = timestamp;
-        alert(selectedEmployee + " Clocked in at " + timestampOut)
-        // $("#table").append("<tr><td>" + selectedEmployee + "</td><td></td><td> " + timestampOut + "</td></tr>")
+        alert(selectedEmployee + " Clocked out at " + timestampOut)
 
         // Change what is saved in firebase
-        database.ref("employees/" + selectedEmployee + "/" + databaseDate + "/OUT").set({
-            punchIN: timestampIn,
+        database.ref("employees/" + selectedEmployee + "/" + date).update({
             punchOUT: timestampOut,
         });
     }
@@ -180,12 +177,11 @@ function addEmployee() {
         database.ref("employees/" + newEmployeeName).set({
             name: newEmployeeName,
         });
-        database.ref("employees/" + newEmployeeName + "/" + databaseDate + "/OUT").set({
+        database.ref("employees/" + newEmployeeName + "/" + date).set({
+            punchIN: "00:00",
             punchOUT: "00:00",
         });
-        database.ref("employees/" + newEmployeeName + "/" + databaseDate + "/IN").set({
-            punchIN: "00:00",
-        });
+
         alert(newEmployeeName + " added!");
         // $("#add-modal-content").html("Success!");
         employeeList();
